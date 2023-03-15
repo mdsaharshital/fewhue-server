@@ -21,7 +21,6 @@ router.post(
   formidable(),
   createProductController
 );
-export default router;
 
 //get products
 router.get("/get-product", getProductController);
@@ -48,3 +47,5 @@ router.put(
   formidable(),
   updateProductController
 );
+
+export default router;

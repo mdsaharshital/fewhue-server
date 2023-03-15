@@ -7,7 +7,7 @@ dotenv.config();
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, quantity, shipping } = req.fields;
+    const { name, description, price, category } = req.fields;
     const { photo } = req.files;
     // Validation
     switch (true) {
@@ -17,8 +17,8 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Description is Required" });
       case !price:
         return res.status(500).send({ error: "Price is Required" });
-      case !quantity:
-        return res.status(500).send({ error: "Quantity is Required" });
+      case !category:
+        return res.status(500).send({ error: "Category is Required" });
       case photo && photo.size > 1000000:
         return res
           .status(500)
@@ -51,6 +51,7 @@ export const getProductController = async (req, res) => {
   try {
     const products = await productModel
       .find({})
+      .populate("category")
       .select("-photo")
       .limit(12)
       .sort({ createdAt: -1 });
@@ -75,7 +76,8 @@ export const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel
       .findOne({ slug: req.params.slug })
-      .select("-photo");
+      .select("-photo")
+      .populate("category");
     res.status(200).send({
       success: true,
       message: "Single Product Fetched",
@@ -97,7 +99,7 @@ export const productPhotoController = async (req, res) => {
     const product = await productModel.findById(req.params.pid).select("photo");
     if (product.photo.data) {
       res.set("Content-type", product.photo.contentType);
-      return res.status(200).send(product.photo.data);
+      return res.status(200).send(product.photo);
     }
   } catch (error) {
     console.log(error);
@@ -130,7 +132,7 @@ export const deleteProductController = async (req, res) => {
 // update product
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, quantity, shipping } = req.fields;
+    const { name, description, price, category } = req.fields;
     const { photo } = req.files;
     //alidation
     switch (true) {
@@ -140,8 +142,8 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: "Description is Required" });
       case !price:
         return res.status(500).send({ error: "Price is Required" });
-      case !quantity:
-        return res.status(500).send({ error: "Quantity is Required" });
+      case !category:
+        return res.status(500).send({ error: "category is Required" });
       case photo && photo.size > 1000000:
         return res
           .status(500)
