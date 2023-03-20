@@ -42,5 +42,3 @@ app.listen(PORT, () => {
       .white
   );
 });
-
-module.exports = app;
