@@ -7,6 +7,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 import path from "path";
 // import { fileURLToPath } from "url";
 
@@ -32,6 +33,7 @@ app.use(morgan("dev"));
 app.use("/auth", authRoutes);
 app.use("/product", productRoutes);
 app.use("/category", categoryRoutes);
+app.use("/order", orderRoutes);
 
 //rest api
 app.use("/", function (req, res) {
