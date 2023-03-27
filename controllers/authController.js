@@ -63,14 +63,14 @@ export const registerController = async (req, res) => {
 // post login
 export const loginController = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     //validation
-    // if (!email || !password) {
-    //   return res.status(404).send({
-    //     success: false,
-    //     message: "Invalid email or password",
-    //   });
-    // }
+    if (!email || !password) {
+      return res.status(404).send({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
     //check user
     const user = await userModel.findOne({ email });
     if (!user) {
@@ -79,13 +79,13 @@ export const loginController = async (req, res) => {
         message: "Email is not registerd",
       });
     }
-    // const match = await comparePassword(password, user.password);
-    // if (!match) {
-    //   return res.status(200).send({
-    //     success: false,
-    //     message: "Invalid Password",
-    //   });
-    // }
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      return res.status(200).send({
+        success: false,
+        message: "Invalid Password",
+      });
+    }
     //token
     const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -110,6 +110,31 @@ export const loginController = async (req, res) => {
       message: "Error in login",
       error,
     });
+  }
+};
+
+// GET LOGGED IN USER
+export const getLoggedUser = async (req, res) => {
+  try {
+    // Check if the Authorization header contains a valid JWT
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ message: "Authorization token missing" });
+    }
+
+    const decodedToken = JWT.verify(token, process.env.JWT_SECRET);
+
+    // Find the user in the database by their ID
+    const user = await userModel.findById(decodedToken._id).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    // Return the user data
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

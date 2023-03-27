@@ -9,7 +9,7 @@ import { isAdmin, requiredSignIn } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 // test || METHOD POST
-router.get("/get-allorders", getAllOrdersController);
+router.get("/get-allorders", requiredSignIn, isAdmin, getAllOrdersController);
 // test || METHOD POST
 router.post("/place-order", placeOrder);
 

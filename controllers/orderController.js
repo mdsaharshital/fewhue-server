@@ -21,7 +21,6 @@ export const placeOrder = async (req, res) => {
     case !totalPrice:
       return res.status(500).send({ error: "totalPrice is Required" });
   }
-
   const order = await new orderModel({
     products,
     name,
@@ -42,6 +41,14 @@ export const placeOrder = async (req, res) => {
 //orders
 export const getAllOrdersController = async (req, res) => {
   try {
+    console.log("de", req.user);
+    if (!req.user) {
+      return res.status(500).send({
+        success: false,
+        message: "Unauthorized admin",
+        error,
+      });
+    }
     const orders = await orderModel
       .find({})
       .populate("cart", "-photo")
