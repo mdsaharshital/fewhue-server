@@ -8,9 +8,10 @@ import { isAdmin, requiredSignIn } from "../middlewares/authMiddleware.js";
 // router object
 const router = express.Router();
 
-// test || METHOD POST
+// get all order(admin) || METHOD POST
 router.get("/get-allorders", requiredSignIn, isAdmin, getAllOrdersController);
-// test || METHOD POST
+// place a order(user) || METHOD POST
 router.post("/place-order", placeOrder);
-
+// update order status || METHOD PUT
+// code
 export default router;

@@ -31,7 +31,6 @@ const orderSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     phone: {
       type: String,
@@ -58,5 +57,5 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+// orderSchema.index({ email: 1 }, { unique: false });
 export default mongoose.model("Order", orderSchema);
