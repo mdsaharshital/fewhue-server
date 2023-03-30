@@ -2,27 +2,16 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    products: [
-      {
-        product: {
-          type: mongoose.ObjectId,
-          ref: "Products",
-          // required: true,
+    products: {
+      type: [
+        {
+          name: String,
+          price: Number,
+          quantity: Number,
         },
-        quantity: {
-          type: Number,
-          required: true,
-          min: 1,
-        },
-      },
-    ],
-    cart: [
-      {
-        type: mongoose.ObjectId,
-        ref: "Products",
-        required: true,
-      },
-    ],
+      ],
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -31,6 +20,7 @@ const orderSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      index: { unique: false },
     },
     phone: {
       type: String,
@@ -57,5 +47,4 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-// orderSchema.index({ email: 1 }, { unique: false });
 export default mongoose.model("Order", orderSchema);

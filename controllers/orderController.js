@@ -21,21 +21,26 @@ export const placeOrder = async (req, res) => {
     case !totalPrice:
       return res.status(500).send({ error: "totalPrice is Required" });
   }
-  const order = await new orderModel({
+  const order = new orderModel({
     products,
     name,
     phone,
     email,
     address,
     totalPrice,
-    cart: products,
-  }).save();
-  //
-  return res.status(201).send({
-    success: true,
-    message: "Order placed successfully",
-    order,
   });
+
+  try {
+    await order.save();
+    return res.status(201).send({
+      success: true,
+      message: "Order placed successfully",
+      order,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: "Failed to place order" });
+  }
 };
 
 //orders
