@@ -56,7 +56,7 @@ export const getAllOrdersController = async (req, res) => {
     }
     const orders = await orderModel
       .find({})
-      .populate("cart", "-photo")
+      // .populate("cart", "-photo")
       .sort({ createdAt: "-1" });
     res.json(orders);
   } catch (error) {
