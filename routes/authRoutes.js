@@ -1,7 +1,7 @@
 import express from "express";
 import {
+  adminLoginController,
   getLoggedUser,
-  loginController,
   registerController,
   testController,
 } from "../controllers/authController.js";
@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/register", registerController);
 
 // LOGIN || METHOD POST
-router.post("/login", loginController);
+router.post("/login", adminLoginController);
 
 // GET LOGGED IN USER || METHOD GET
 router.get("/getLoggedInUser", getLoggedUser);

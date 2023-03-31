@@ -60,8 +60,8 @@ export const registerController = async (req, res) => {
   }
 };
 
-// post login
-export const loginController = async (req, res) => {
+// post login || ADMIN LOGIN
+export const adminLoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
     //validation
@@ -86,9 +86,15 @@ export const loginController = async (req, res) => {
         message: "Invalid Password",
       });
     }
+    if (user.role !== 1) {
+      return res.status(404).send({
+        success: false,
+        message: "Forbidden access",
+      });
+    }
     //token
     const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "1d",
     });
     res.status(200).send({
       success: true,
