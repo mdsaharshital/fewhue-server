@@ -17,6 +17,10 @@ const orderSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    orderNumber: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,

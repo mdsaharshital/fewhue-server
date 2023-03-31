@@ -4,7 +4,8 @@ import orderModel from "../models/orderModel.js";
 dotenv.config();
 
 export const placeOrder = async (req, res) => {
-  const { products, name, phone, email, address, totalPrice } = req.body;
+  const { products, name, phone, email, address, totalPrice, orderNumber } =
+    req.body;
   console.log("", req.body);
   // Validation
   switch (true) {
@@ -20,6 +21,8 @@ export const placeOrder = async (req, res) => {
       return res.status(500).send({ error: "address is Required" });
     case !totalPrice:
       return res.status(500).send({ error: "totalPrice is Required" });
+    case !orderNumber:
+      return res.status(500).send({ error: "orderNumber is Required" });
   }
   const order = new orderModel({
     products,
@@ -28,6 +31,7 @@ export const placeOrder = async (req, res) => {
     email,
     address,
     totalPrice,
+    orderNumber,
   });
 
   try {
