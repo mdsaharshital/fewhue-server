@@ -72,3 +72,29 @@ export const getAllOrdersController = async (req, res) => {
     });
   }
 };
+
+//order status
+export const orderStatusController = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    console.log("", orderId, status);
+    const orders = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    res.send({
+      success: true,
+      message: "Order status updated",
+      orders,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error While Updating Order status",
+      error,
+    });
+  }
+};
