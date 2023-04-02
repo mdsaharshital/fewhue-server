@@ -1,14 +1,10 @@
 {
+  "version": 2,
+  "name": "fewhue-server",
   "builds": [
-      {
-        "src": "index.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "index.js"
-      }
+     { "src": "./index.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+     { "src": "/(.*)", "dest": "/index.js" }
   ]
-  }
+}
