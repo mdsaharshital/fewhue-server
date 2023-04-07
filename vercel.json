@@ -1,12 +1,26 @@
 {
-  "version": 2,
-  "name": "fewhue-server",
   "builds": [
-     { "src": "./index.js",
-      "use": "@vercel/node" }
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-     { "src": "/(.*)",
-      "dest": "/" }
+    {
+      "src": "/auth/.*",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/product/.*",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/category/.*",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/order/.*",
+      "dest": "/index.js"
+    }
   ]
 }
