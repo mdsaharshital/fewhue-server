@@ -30,10 +30,10 @@ app.use(morgan("dev"));
 // app.use(express.static(path.join(__dirname, "../fewhew-frontend/build")));
 
 // routes
-app.use("/auth", authRoutes);
-app.use("/product", productRoutes);
-app.use("/category", categoryRoutes);
-app.use("/order", orderRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/order", orderRoutes);
 
 //rest api
 app.use("/", function (req, res) {
