@@ -19,15 +19,11 @@ connectDB();
 
 //rest object
 const app = express();
-// esmodule fix
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
 //----- middleware -----
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-// app.use(express.static(path.join(__dirname, "../fewhew-frontend/build")));
 
 // routes
 app.use("/api/auth", authRoutes);
@@ -37,7 +33,6 @@ app.use("/api/order", orderRoutes);
 
 //rest api
 app.use("/", function (req, res) {
-  // res.sendFile(path.join(__dirname, "../fewhew-frontend/build/index.html"));
   res.send("fewhue server");
 });
 
@@ -52,17 +47,4 @@ app.listen(PORT, () => {
   );
 });
 
-// {
-//   "builds": [
-//       {
-//         "src": "./index.js",
-//         "use": "@vercel/node"
-//       }
-//     ],
-//     "routes": [
-//       {
-//         "src": "/(.*)",
-//         "dest": "index.js"
-//       }
-//   ]
-//   }
+export default app;
